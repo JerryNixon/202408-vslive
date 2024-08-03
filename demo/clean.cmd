@@ -3,9 +3,11 @@ setlocal enabledelayedexpansion
 
 cd..
 
-REM Loop through all directories in the current directory, including hidden
+for %%i in (*.sln) do (
+    del /f /q "%%i" 2>nul
+)
+
 for /d %%i in (*) do (
-    REM Check if the directory is not /demo
     if /i not "%%i"=="demo" (
         rmdir /s /q "%%i" 2>nul
     )
