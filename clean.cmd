@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 REM Define the files to exclude from deletion as a space-separated list
-set excludeFiles=setup.cmd clean.cmd mssql.cmd mssql.sql sqlcmd.exe HR.bak LICENSE README.md
+set excludeFiles=setup.cmd clean.cmd mssql.cmd sqlcmd.exe HR.bak
 
 REM Loop through all files in the current directory
 for %%i in (*.*) do (
