@@ -4,7 +4,8 @@ REM Define solution and project names
 set solutionName=VSLiveDemo
 set databaseProjectName=Database
 set apiProjectName=Api
-set sqlConnection=Data Source=(localdb)\\MSSQLLocalDB;Database=HR;Integrated Security=True;
+REM set sqlConnection=Data Source=(localdb)\\MSSQLLocalDB;Database=HR;Integrated Security=True;
+set sqlConnection=Data Source=127.0.0.1,1234;Database=HR;User id=AppUser;Password=P@ssw0rd!;
 
 REM Create the solution 
 dotnet new sln -n %solutionName%
@@ -26,13 +27,12 @@ dotnet restore %apiProjectName%/%apiProjectName%.csproj
 dotnet sln %solutionName%.sln add %apiProjectName%\%apiProjectName%.csproj
 
 REM Create directories and files
-mkdir %databaseProjectName%\Tables
-call :CreateDepartmentTable
-call :CreateEmployeeTable
-
-mkdir %databaseProjectName%\Procedures
-call :CreateReorgEmployeeProcedure
-call :CreatePostDeploymentScript
+REM mkdir %databaseProjectName%\Tables
+REM call :CreateDepartmentTable
+REM call :CreateEmployeeTable
+REM mkdir %databaseProjectName%\Procedures
+REM call :CreateReorgEmployeeProcedure
+REM call :CreatePostDeploymentScript
 
 mkdir %apiProjectName%\Repository
 call :CreateHrContext
