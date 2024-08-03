@@ -19,12 +19,6 @@ dotnet add %apiProjectName%\%apiProjectName%.csproj package Microsoft.EntityFram
 dotnet restore %apiProjectName%/%apiProjectName%.csproj
 dotnet sln %solutionName%.sln add %apiProjectName%\%apiProjectName%.csproj
 
-
-dotnet add Api/Api.csproj package HotChocolate.AspNetCore
-dotnet add Api/Api.csproj package HotChocolate.AspNetCore.Subscriptions
-dotnet add Api/Api.csproj package Microsoft.EntityFrameworkCore
-dotnet add Api/Api.csproj package Microsoft.EntityFrameworkCore.SqlServer
-
 mkdir %apiProjectName%\Repository
 call :CreateHrContext
 call :CreateDepartmentClass
