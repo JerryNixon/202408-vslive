@@ -48,9 +48,19 @@ exit /b
     echo         optionsBuilder.UseSqlServer(connectionString^);
     echo     ^}
     echo.
-    echo     public DbSet^<Department^> Departments { get; set; }
+    echo     public DbSet^<Department^> Departments { get; set; };
     echo.
-    echo     public DbSet^<Employee^> Employees { get; set; }
+    echo     public DbSet^<Employee^> Employees { get; set; };
+    echo.
+    echo     public Employee ReorganizeEmployee(int employeeId, int departmentId^)
+    echo     ^{
+    echo         Database.ExecuteSqlRaw(
+    echo             "EXEC [dbo].[ReorgEmployee] @EmployeeId = {0^}, @DepartmentId = {1^}", 
+    echo             employeeId, departmentId^);
+    echo.
+    echo         return Employees.SingleOrDefault(e ^^^=^> e.Id == employeeId^)
+    echo             ?? throw new InvalidOperationException($"Employee with ID {employeeId} not found."^);
+    echo     ^}
     echo ^}
 )
 exit /b
