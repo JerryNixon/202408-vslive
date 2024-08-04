@@ -2,7 +2,7 @@
 
 namespace Api.Repository;
 
-public class HrContext : DbContext
+public class TrekContext : DbContext
 {
     private const string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Database=HR;Integrated Security=True;";
 

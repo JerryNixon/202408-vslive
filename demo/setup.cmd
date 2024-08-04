@@ -5,7 +5,7 @@ cd..
 REM Define solution and project names
 set solutionName=VSLiveDemo
 set apiProjectName=Api
-set sqlConnection=Data Source=127.0.0.1,1234;Database=HR;User id=AppUser;Password=P@ssw0rd!;
+set sqlConnection=Data Source=127.0.0.1,1234;Database=trek;User id=AppUser;Password=P@ssw0rd!;
 
 REM Create the solution 
 dotnet new sln -n %solutionName%

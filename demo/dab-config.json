@@ -24,22 +24,64 @@
         "allow-credentials": false
       },
       "authentication": {
-        "provider": "StaticWebApps"
+        "provider": "Simulator"
       },
       "mode": "development"
+    },
+    "cache": {
+      "enabled": true,
+      "ttl-seconds": 60
     }
   },
   "entities": {
-    "Department": {
+    "Actor": {
       "source": {
-        "object": "dbo.Department",
+        "object": "[dbo].[Actor]",
         "type": "table"
       },
       "graphql": {
         "enabled": true,
         "type": {
-          "singular": "Department",
-          "plural": "Departments"
+          "singular": "Actor",
+          "plural": "Actors"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            "*"
+          ]
+        }
+      ],
+      "relationships": {
+        "character": {
+          "cardinality": "many",
+          "target.entity": "Character",
+          "source.fields": [
+            "Id"
+          ],
+          "target.fields": [
+            "ActorId"
+          ],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        }
+      }
+    },
+    "Character": {
+      "source": {
+        "object": "[dbo].[Character]",
+        "type": "table"
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Character",
+          "plural": "Characters"
         }
       },
       "rest": {
@@ -56,30 +98,64 @@
         }
       ],
       "relationships": {
-        "employees": {
+        "actor": {
+          "cardinality": "one",
+          "target.entity": "Actor",
+          "source.fields": [
+            "ActorId"
+          ],
+          "target.fields": [
+            "Id"
+          ],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "species": {
           "cardinality": "many",
-          "target.entity": "Employee",
+          "target.entity": "Species",
           "source.fields": [
             "Id"
           ],
           "target.fields": [
-            "DepartmentId"
+            "Id"
           ],
-          "linking.source.fields": [],
-          "linking.target.fields": []
+          "linking.object": "dbo.character_species",
+          "linking.source.fields": [
+            "CharacterId"
+          ],
+          "linking.target.fields": [
+            "SpeciesId"
+          ]
+        },
+        "series": {
+          "cardinality": "many",
+          "target.entity": "Series",
+          "source.fields": [
+            "Id"
+          ],
+          "target.fields": [
+            "Id"
+          ],
+          "linking.object": "dbo.series_character",
+          "linking.source.fields": [
+            "CharacterId"
+          ],
+          "linking.target.fields": [
+            "SeriesId"
+          ]
         }
       }
     },
-    "Employee": {
+    "Series": {
       "source": {
-        "object": "dbo.Department",
+        "object": "[dbo].[Series]",
         "type": "table"
       },
       "graphql": {
         "enabled": true,
         "type": {
-          "singular": "Employee",
-          "plural": "Employees"
+          "singular": "Series",
+          "plural": "Series"
         }
       },
       "rest": {
@@ -94,41 +170,71 @@
             }
           ]
         }
-      ]
-    },
-    "ReorgEmployee": {
-      "source": {
-        "object": "dbo.ReorgEmployee",
-        "type": "stored-procedure",
-        "parameters": {
-          "EmployeeId": 0,
-          "DepartmentId": 0
+      ],
+      "relationships": {
+        "character": {
+          "cardinality": "many",
+          "target.entity": "Character",
+          "source.fields": [
+            "Id"
+          ],
+          "target.fields": [
+            "Id"
+          ],
+          "linking.object": "dbo.series_character",
+          "linking.source.fields": [
+            "SeriesId"
+          ],
+          "linking.target.fields": [
+            "CharacterId"
+          ]
         }
+      }
+    },
+    "Species": {
+      "source": {
+        "object": "[dbo].[Species]",
+        "type": "table"
       },
       "graphql": {
         "enabled": true,
-        "operation": "mutation",
         "type": {
-          "singular": "ReorgEmployee",
-          "plural": "ReorgEmployees"
+          "singular": "Species",
+          "plural": "Species"
         }
       },
       "rest": {
-        "enabled": true,
-        "methods": [
-          "get"
-        ]
+        "enabled": true
       },
       "permissions": [
         {
           "role": "anonymous",
           "actions": [
             {
-              "action": "execute"
+              "action": "*"
             }
           ]
         }
-      ]
+      ],
+      "relationships": {
+        "character": {
+          "cardinality": "many",
+          "target.entity": "Character",
+          "source.fields": [
+            "Id"
+          ],
+          "target.fields": [
+            "Id"
+          ],
+          "linking.object": "dbo.character_species",
+          "linking.source.fields": [
+            "SpeciesId"
+          ],
+          "linking.target.fields": [
+            "CharacterId"
+          ]
+        }
+      }
     }
   }
 }
